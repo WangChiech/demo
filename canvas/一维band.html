@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/konva@^4.0.3/konva.js"></script>
+  <!-- <script src="./js/progress.js"></script> -->
+  <title>Document</title>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script>
+    // 创建舞台
+    var stage = new Konva.Stage({
+      container: 'container',
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+
+    // 创建层
+    var layer = new Konva.Layer();
+    stage.add(layer);
+    
+    // 中心点坐标
+    var cenX = stage.width()/2;
+    var cenY = stage.height()/2;
+
+    // 柱状图数据
+    var data = [
+      { name: '前端', value: '.8', color: 'green'},
+      { name: 'php', value: '.3', color: 'blue'},
+      { name: 'java', value: '.7', color: 'red'},
+      { name: 'ui', value: '.9', color: 'orange'},
+      { name: 'ios', value: '.4', color: 'purple'},
+      { name: 'android', value: '.9', color: 'pink'},
+    ];
+
+
+    var x0 = 1/8 * stage.width(); // 柱状图原点坐标
+    var y0 = 3/4 * stage.height();
+
+    var width = 3/4 * stage.width(); // 柱状图最大宽度
+    var height = 1/2 * stage.height();
+
+    // 绘制底线
+    var bsline_1 = new Konva.Line({
+      points: [x0, y0, x0+50, y0],
+      strokeWidth: 5,
+      stroke: 'skyblue',
+    });
+    var bsline_2 = new Konva.Line({
+      points: [x0+52, y0, x0+102, y0],
+      strokeWidth: 5,
+      stroke: 'skyblue',
+    });
+
+    layer.add(bsline_1);
+    layer.add(bsline_2);
+    layer.draw();
+
+
+
+
+    
+  
+  
+  </script>
+</body>
+</html>

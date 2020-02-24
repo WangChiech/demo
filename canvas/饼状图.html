@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script>
+    // 创建舞台
+    const stage = new Konva.Stage({
+      container: 'container',
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+
+    // 创建层
+    const layer = new Konva.Layer();
+    stage.add(layer);
+
+    // 中心点坐标
+    const cenX = stage.width()/2;
+    const centY = stage.height()/2;
+    
+    // 饼状图数据
+    const data = [
+      { name: '前端', value: '.8', color: 'green'},
+      { name: 'php', value: '.3', color: 'blue'},
+      { name: 'java', value: '.7', color: 'red'},
+      { name: 'ui', value: '.9', color: 'orange'},
+      { name: 'ios', value: '.4', color: 'purple'},
+      { name: 'android', value: '.9', color: 'pink'},
+    ];
+
+  </script>
+</body>
+</html>

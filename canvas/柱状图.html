@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/konva@^4.0.3/konva.js"></script>
+  <!-- <script src="./js/progress.js"></script> -->
+  <title>Document</title>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script>
+    // 创建舞台
+    var stage = new Konva.Stage({
+      container: 'container',
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+
+    // 创建层
+    var layer = new Konva.Layer();
+    stage.add(layer);
+    
+    // 中心点坐标
+    var cenX = stage.width()/2;
+    var cenY = stage.height()/2;
+
+    // 柱状图数据
+    var data = [
+      { name: '前端', value: '.8', color: 'green'},
+      { name: 'php', value: '.3', color: 'blue'},
+      { name: 'java', value: '.7', color: 'red'},
+      { name: 'ui', value: '.9', color: 'orange'},
+      { name: 'ios', value: '.4', color: 'purple'},
+      { name: 'android', value: '.9', color: 'pink'},
+    ];
+
+
+    var x0 = 1/8 * stage.width(); // 柱状图原点坐标
+    var y0 = 3/4 * stage.height();
+
+    var width = 3/4 * stage.width(); // 柱状图最大宽度
+    var height = 1/2 * stage.height();
+
+    // 绘制底线
+    var bsline_1 = new Konva.Line({
+      points: [x0, y0, x0+width, y0],
+      strokeWidth: 1,
+      stroke: 'skyblue',
+    });
+
+    
+    layer.add(bsline_1);
+
+    // 定义 矩形和矩形两边的 边距的宽度
+    var rectWidth = width/data.length;
+
+    // 绘制柱状图的矩形： 遍历每一条数据然后生成一个矩形
+    data.forEach(function(item,index) {
+      // 生成一个矩形
+      var rect = new Konva.Rect({
+        x: x0+(1/4+index)*rectWidth,
+        y: y0-item.value*height,
+        width: 1/2*rectWidth,
+        height: item.value*height,
+        fill: item.color,
+        opacity: .8,
+        cornerRadius: 10,
+      });
+      layer.add(rect)
+
+      // 把百分比的文字放到 柱状图的顶部
+      var text = new Konva.Text({
+        x: x0 + index*rectWidth,
+        y: y0 - item.value*height - 14,
+        fontSize: 14,
+        text: item.value*100 + '%',
+        fill: item.color,
+        width: rectWidth,
+        align: 'center',
+        name: 'textPercent'
+      })
+      layer.add(text);
+
+      var group = new Konva.Group({
+        x: x0 + index*rectWidth,
+        y: y0 ,
+      })
+      // 把文字放到 柱状图的底部
+      var text_bottom = new Konva.Text({
+        x: 0,
+        y: 0,
+        fontSize: 14,
+        text: item.name,
+        fill: item.color,
+        width: rectWidth,
+        align: 'center',
+        rotation: 30,
+      })
+      group.add(text_bottom)
+      layer.add(group);
+
+    });
+
+
+    layer.draw();
+
+    // 做一个动画
+    stage.on('contentClick',function() {
+      console.log(1111)
+      // 让柱状图进行动画展示
+
+      // 让柱状图中所有矩形 height: 0, y-> y0
+      // 拿到所有矩形
+      layer.find('Rect').each(function(item,index){
+        item.y(y0); // 在 Konva 中，如果传参数：设置值，如果不传参数代表取值
+        item.height(0);
+
+        // 动画显示到 初始的状态
+        item.to({
+          duration: 1,
+          y: y0-data[index].value*height,
+          height: data[index].value*height,
+        })
+      })
+
+      // 顶部文字设置动画
+      layer.find('.textPercent').each(function(item,index) {
+        item.y(y0-14);
+        item.to({
+          duration: 1,
+          y: y0 - data[index].value*height - 14,
+        });
+      });
+      
+    });
+
+
+
+
+    
+  
+  
+  </script>
+</body>
+</html>

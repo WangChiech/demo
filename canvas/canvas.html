@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    /* body {
+      margin: 0;
+    } */
+  </style>
+</head>
+<body>
+  <!-- 设置canvas的宽高是通过canvas的内部属性来设置的，通过css设置的宽高会拉伸canvas -->
+  <canvas id="demo" width="600" height="600">
+    ie9 以上才支持
+    你的浏览器不支持 canvas
+    <!-- flash -->
+  </canvas>
+  <script>
+    // 1. 拿到canvas标签
+    var canvas = document.getElementById('demo');
+    canvas.style.border = '1px solid red';
+    // canvas.width = 600; 
+    // canvas.height = 600;
+    // canvas.style.height = 1200 // 错误，不使用css设置canvas样式
+
+    // 2. 拿到canvas的上下文
+    var context = canvas.getContext('2d'); // 'webgl'
+
+    // 绘制
+    context.moveTo(0,0); // 画笔移动到（100,100）
+    context.lineTo(200, 100); 
+    context.lineTo(100, 200);
+    // context.lineTo(0,0) 
+    context.closePath() //闭合标签
+    
+    // 设置线宽
+    context.lineWidth = 4;
+
+    context.strokeStyle = 'red';  // 描边颜色
+    context.stroke(); // 描边
+
+    context.fillStyle = 'green'; // 需在context.fill()前设置才能生效
+    context.fill();
+  </script>
+</body>
+</html>
