@@ -29,36 +29,96 @@
 
     // 柱状图数据
     var data = [
-      { name: '前端', value: '.8', color: 'green'},
-      { name: 'php', value: '.3', color: 'blue'},
-      { name: 'java', value: '.7', color: 'red'},
-      { name: 'ui', value: '.9', color: 'orange'},
-      { name: 'ios', value: '.4', color: 'purple'},
-      { name: 'android', value: '.9', color: 'pink'},
+      { name: 'A', value: '10', color: 'blueSky'},
+      { name: 'B', value: '10', color: 'blue'},
+      { name: 'C', value: '10', color: 'red'},
+      { name: 'D', value: '20', color: 'orange'},
+      { name: 'E', value: '50', color: 'purple'},
     ];
 
+    var x0 = 1/20 * stage.width(); // 柱状图原点坐标
+    var y0 = 2/4 * stage.height();
+    var miniLineX = x0
+    var rectX = x0
+    var rectGroup
+    data.forEach(function (item,index) {
+      var miniLineNum = item.value/5;
+      for (var i=0;i<miniLineNum;i++) {
+        var miniLine = new Konva.Line({
+          points: [miniLineX, y0, miniLineX+30, y0],
+          strokeWidth: 5,
+          stroke: item.color,
+        })
+        miniLineX += 32;
+        layer.add(miniLine)
+      }
+      rectX += item.value/5*32;
+      rectGroup = new Konva.Group({
+        x: rectX-6,
+        y: y0 - 7
+      })
+      var rect = new Konva.Rect({
+        x: 0,
+        y: 0,
+        width: 6,
+        height: 10,
+        stroke: item.color,
+        // opacity: .8,
+        strokeWidth: 1,
+        fill: '#fff',
+        index: 1,
+        id: 'rect' + index
+      })
+      rectGroup.add(rect)
+      layer.add(rectGroup)
+      
+      // 绘制水滴
+      var curveGroup = new Konva.Group({
+        x: rectX -12,
+        y: y0 -32
+      })
+      var curve = new Konva.Shape({
+        sceneFunc: function(context) {
+          context.beginPath();
+          context.fillStyle=this.color;
+          context.arc(9,9,9,Math.PI,0);
+          context.moveTo(18,9)
+          context.quadraticCurveTo(18,15,9,24)
+          context.quadraticCurveTo(0,15,0,9)
+          context.fillShape(this);
+        },
+        fill: item.color
+      });
+      curveGroup.add(curve)
+      layer.add(curveGroup)
 
-    var x0 = 1/8 * stage.width(); // 柱状图原点坐标
-    var y0 = 3/4 * stage.height();
+      // 绘制下方文字
+      var textGroup = new Konva.Group({
+        x: rectX -12,
+        y: y0 -27
+      })
+      var text = new Konva.Text({
+        x: 0,
+        y: 0,
+        fontSize: 14,
+        text: item.name,
+        fill: '#fff',
+        width: 20,
+        align: 'center',
+      })
+      textGroup.add(text);
+      layer.add(textGroup)
+    })
 
-    var width = 3/4 * stage.width(); // 柱状图最大宽度
-    var height = 1/2 * stage.height();
-
-    // 绘制底线
-    var bsline_1 = new Konva.Line({
-      points: [x0, y0, x0+50, y0],
-      strokeWidth: 5,
-      stroke: 'skyblue',
-    });
-    var bsline_2 = new Konva.Line({
-      points: [x0+52, y0, x0+102, y0],
-      strokeWidth: 5,
-      stroke: 'skyblue',
-    });
-
-    layer.add(bsline_1);
-    layer.add(bsline_2);
+    
     layer.draw();
+
+    stage.on('click', function(e) {
+      console.log('111',e)
+      rectGroup.getChildren().each(function(item,index) {
+        console.log('222', item.x())
+      })
+    })
 
 
 

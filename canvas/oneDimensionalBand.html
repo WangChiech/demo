@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/konva@^4.0.3/konva.js"></script>
+  <script src="./js/oneDimensionalBand.js"></script>
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script>
+    // 创建舞台
+    var stage = new Konva.Stage({
+      container: 'container',
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+
+    // 创建层
+    var layer = new Konva.Layer();
+    stage.add(layer);
+    
+    // 中心点坐标
+    var cenX = stage.width()/2;
+    var cenY = stage.height()/2;
+
+    // 柱状图数据
+    var data = [
+      { name: 'A', value: '10', color: 'blueSky'},
+      { name: 'B', value: '10', color: 'blue'},
+      { name: 'C', value: '10', color: 'red'},
+      { name: 'D', value: '20', color: 'orange'},
+      { name: 'E', value: '50', color: 'purple'},
+    ];
+
+    var h = new OneDimensionalBand({
+      x: 1/8*stage.width(),
+      y: 3/4*stage.height(),
+      data: data
+    });
+    h.addToGroupOrLayer(layer);
+
+    layer.draw();
+
+    stage.on('click', function(e) {
+      console.log('111',e.evt.layerX)
+      var nodeArr = h.playAnimate()
+      console.log(333,nodeArr)
+    })
+
+  </script>
+</body>
+</html>
