@@ -101,13 +101,35 @@ OneDimensionalBand.prototype = {
   addToGroupOrLayer: function(arg) {
     arg.add(this.group)
   },
-  playAnimate: function() {
+  getAllNode: function() {
     var self = this
     var nodeArray = []
+    var nodeY = 0
     this.rectGroup.getChildren().each(function(item, index) {
       nodeArray.push(item.x()+self.x)
+      nodeY = item.y()+self.y
     })
-    console.log(222,nodeArray)
-    return nodeArray
+    return {nodeArray, nodeY}
+  },
+  nodeAnimate: function (movaX, dragNodeIndex) {
+    var self = this
+    var endX = movaX
+    var dragNodeIndex = dragNodeIndex
+    var moveToX = 0
+    this.rectGroup.getChildren().each(function(item, index) {
+      if (index === dragNodeIndex && endX-item.x()> 25) {
+        self.data[index].value = self.data[index].value-5
+        self.data.forEach((item,index) => {
+          if (index <= dragNodeIndex) {
+            moveToX += item.value/5*32
+          }
+        })
+        item.to({
+          duration: .3,
+          x: moveToX -6
+        })
+
+      }
+    })
   }
 }

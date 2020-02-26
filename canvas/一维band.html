@@ -36,8 +36,8 @@
       { name: 'E', value: '50', color: 'purple'},
     ];
 
-    var x0 = 1/20 * stage.width(); // 柱状图原点坐标
-    var y0 = 2/4 * stage.height();
+    var x0 = 1/20 * stage.width() // 柱状图原点坐标
+    var y0 = 2/4 * stage.height()
     var miniLineX = x0
     var rectX = x0
     var rectGroup
@@ -88,7 +88,7 @@
           context.fillShape(this);
         },
         fill: item.color
-      });
+      })
       curveGroup.add(curve)
       layer.add(curveGroup)
 
@@ -111,10 +111,12 @@
     })
 
     
-    layer.draw();
+    layer.draw()
+
+    var startX = 0
 
     stage.on('click', function(e) {
-      console.log('111',e)
+      console.log('111',e.evt.layerX)
       rectGroup.getChildren().each(function(item,index) {
         console.log('222', item.x())
       })

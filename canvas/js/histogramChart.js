@@ -96,6 +96,7 @@ HistogramChart.prototype = {
     this.rectGroup.getChildren().each(function(item, index) {
       item.y(0);
       item.height(0);
+      // self.data[index].value = .1
       // 经过一个动画还原
       item.to({
         duration: 1,

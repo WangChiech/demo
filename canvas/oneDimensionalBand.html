@@ -32,7 +32,7 @@
     var cenX = stage.width()/2;
     var cenY = stage.height()/2;
 
-    // 柱状图数据
+    // 一维band数据
     var data = [
       { name: 'A', value: '10', color: 'blueSky'},
       { name: 'B', value: '10', color: 'blue'},
@@ -50,10 +50,45 @@
 
     layer.draw();
 
-    stage.on('click', function(e) {
-      console.log('111',e.evt.layerX)
-      var nodeArr = h.playAnimate()
-      console.log(333,nodeArr)
+    var startX = 0, // 鼠标拖拽起始点坐标
+        startY = 0,
+        nodeArr = [],
+        nodeY = 0,
+        dragNodeIndex = -1
+    stage.on('contentMousedown', function(e) {
+      var mouseX = e.evt.layerX
+      var mouseY = e.evt.layerY
+      var node = h.getAllNode()
+      nodeArr = node.nodeArray
+      nodeY = node.nodeY
+      nodeMOved = false
+      
+      if (
+        mouseY < (nodeY + 12) &&
+        mouseY > (nodeY - 24)
+      ) {
+        nodeArr.forEach((item,index) => {
+          if (mouseX > item - 2 && mouseX <  item + 8) {
+            dragNodeIndex = index
+          }
+        })
+      }
+    })
+    stage.on('contentMousemove', function(e) {
+      var moveX = e.evt.layerX;
+      if (moveX -nodeArr[dragNodeIndex] < -25) {
+        // console.log('移动node')
+        if (!nodeMOved) {
+          h.nodeAnimate(moveX,dragNodeIndex)
+          nodeMOved = true
+        }
+        
+      }
+    })
+    stage.on('contentMouseup', function(e) {
+      startX = 0
+      startY = 0
+      dragNodeIndex = -1
     })
 
   </script>
