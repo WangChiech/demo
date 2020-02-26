@@ -125,7 +125,7 @@ OneDimensionalBand.prototype = {
           }
         })
         item.to({
-          duration: .3,
+          duration: .1,
           x: moveToX -6
         })
 
