@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise</title>
+    <script src="HD.js"></script>
+</head>
+<body>
+    
+
+
+<script>
+    let p = new HD((resolve, reject) => {
+        // promise 状态改变之后是不能再改的
+        resolve('解决')
+        // reject('reject')
+    }).then(
+        value=> {
+            console.log(value)
+        },
+        reason => {
+            console.log(reason)
+        }
+    )
+
+</script>
+</body>
+</html>
