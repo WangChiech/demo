@@ -1,3 +1,4 @@
+// 异步编程解决方案： 1.callback 2.generouter 3.promise 4.async+await
 // promise 核心有状态、准备状态、解决状态、拒绝状态，最后根据状态改变里面的值
 class HD{
     static PENDING = 'pending'
