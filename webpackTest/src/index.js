@@ -1,3 +1,3 @@
-import { helloword } from './helloword';
+import { helloworld } from './helloworld';
 
-document.write(helloword());
+document.write(helloworld());
