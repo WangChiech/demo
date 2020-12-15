@@ -1,3 +1,4 @@
+// https://juejin.im/post/6845166891061739528
 class Promise {
     constructor(executor) {
         // 不能相信用户的输入，要做参数的校验

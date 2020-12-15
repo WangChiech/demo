@@ -1,3 +1,4 @@
+// 观察者基于发布订阅
 const Observer = (() => {
     // 防止消息队列暴露而篡改故将消息容器作为静态私有变量保存
     const _message = {}
@@ -49,4 +50,14 @@ const Observer = (() => {
 Observer.regist('test', function (e) {
     console.log(e.type, e.args.msg)
 })
-Observer.fire('test', { msg: '传递参数'})
+Observer.regist('test', function (e) {
+    console.log(e.type, e.args.msg)
+})
+Observer.regist('111', function (e) {
+    console.log(e,111)
+})
+Observer.regist('111', function (e) {
+    console.log(e,1111111)
+})
+Observer.fire('111')
+// Observer.fire('test', { msg: '传递参数'})
